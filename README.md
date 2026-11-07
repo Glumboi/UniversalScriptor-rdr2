@@ -50,8 +50,9 @@ void RdrScriptMain(HMODULE glumityInstance)
 }
 ```
 
-## Built binaries can be found on 
-[the nexusmods page]([https://example.com](https://www.nexusmods.com/reddeadredemption2/mods/11513?tab=description))
+<a href="https://www.nexusmods.com/reddeadredemption2/mods/11513?tab=description" target="_blank">
+  <img src="https://img.shields.io/badge/Nexus%20Mods-View%20Mod-red?style=flat-square&logo=nexusmods" alt="Nexus Mods">
+</a>
 
 ## Build requirements
 
