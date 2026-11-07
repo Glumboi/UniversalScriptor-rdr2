@@ -74,6 +74,8 @@ void GetPluginDirectory(HMODULE hModule, char *outBuffer, DWORD bufferSize);
     do                                                         \
     {                                                          \
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);     \
+        if (!hConsole)                                         \
+            break;                                             \
         CONSOLE_SCREEN_BUFFER_INFO csbi;                       \
         WORD originalAttributes = CON_RESET;                   \
         if (GetConsoleScreenBufferInfo(hConsole, &csbi))       \
