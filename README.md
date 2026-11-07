@@ -50,15 +50,7 @@ void RdrScriptMain(HMODULE glumityInstance)
 }
 ```
 
-## How to use built binaries
-
-1. Head to Releases and download a build
-2. Locate and unzip next to application
-3. Run!
-
-```"version.dll"``` can be replaced with different dll/ASI loaders, if using an ASI loader, appropriate renaming of ```"GlumityToolSuiteV2.dll"``` is required!
-
-Compiled scripts are inside ```"Plugins/jit_scripts/"```
+## Built binaries can be found on [the nexusmods page]([https://example.com](https://www.nexusmods.com/reddeadredemption2/mods/11513?tab=description))
 
 ## Build requirements
 
