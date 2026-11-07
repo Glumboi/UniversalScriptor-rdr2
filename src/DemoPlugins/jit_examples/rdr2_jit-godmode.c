@@ -1,5 +1,9 @@
 #include <GlumityLib/GlumityLib.h>
 
+// Example of adding a library from the env's libs folder:
+// ADD_LIB(kernel32)
+// they have to be added after "GlumityLib.h" or you define your own ADD_LIB(x)
+
 /* ScriptHook C port: main.h (scriptRegister, WAIT, ...) + natives.h (all natives).
    Adjust the path to wherever the headers live under tcc_include\include. */
 #include <Scipthookrdr2/main.h>
@@ -32,7 +36,13 @@ void MyScript()
     }
 }
 
-void RdrScriptMain(HMODULE glumityInstance)
+GLUMITYV2_RDR2_PLUGIN_ENTRY
 {
-    scriptRegister(glumityInstance, MyScript);
+    scriptRegister(bridgeInstance, MyScript);
+}
+
+GLUMITYV2_RDR2_PLUGIN_EXIT
+{
+    scriptUnregister(bridgeInstance);
+    return 1;
 }

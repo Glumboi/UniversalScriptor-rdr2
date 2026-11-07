@@ -35,5 +35,4 @@ inline std::map<std::string, GlumityGeneric_Func> hardApiFuncs = {
     {"MH_RemoveHook", reinterpret_cast<GlumityGeneric_Func>(&MH_RemoveHook)},
 };
 
-inline const std::vector<std::string> G_HARD_LIBS = {"msvcrt", "kernel32", "user32"};
 inline std::map<void *, GlumityPlugin> g_compiledScripts = {};
