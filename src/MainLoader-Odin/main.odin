@@ -5,7 +5,6 @@ import c "core:c/libc"
 import "core:strings"
 import "core:sys/windows"
 import "core:thread"
-import "cppDumper"
 import "dllLoader"
 import config "dllLoaderConfig"
 import "exports"
@@ -47,11 +46,7 @@ setup :: proc() {
 	g_pluginLoader.pluginsPath = g_cfg.pluginPath
 	dllLoader.dllLoader_getDllsToLoad(&g_pluginLoader, g_cfg.pluginPath, g_cfg.blockList)
 
-	if g_cfg.loadDumperFirst {
-		dllLoader.dllLoader_LoadIL2CPPDumper(&g_pluginLoader)
-	}
-
-	dllLoader.dllLoader_LoadIL2CPPAPIBridge_TCC(&g_pluginLoader)
+	dllLoader.dllLoader_LoadBridge_TCC(&g_pluginLoader)
 	dllLoader.dllLoader_loadDlls(&g_pluginLoader)
 
 	if len(g_pluginLoader.loadedDlls) <= 0 {

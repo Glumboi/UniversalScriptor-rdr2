@@ -1,6 +1,5 @@
 package dllLoader
 
-import "../cppDumper"
 import "../exports"
 import "../helpers"
 import c "core:c/libc"
@@ -16,7 +15,6 @@ GLUMITY_ENTRY :: "GlumityMain"
 GLUMITY_EXIT :: "GlumityExit"
 
 PRIORITY_DLLS :: [?]string{
-	"GlumityV2IL2CPPDumper.dll",
 	"libtcc.dll",
 }
 
@@ -84,20 +82,7 @@ dllLoader_getDllsToLoad :: proc(
 	}
 }
 
-@(private)
-dllLoader_LoadOldDll :: proc(loader: ^dllLoader, file: string, requestFile: string) {
-	if len(file) <= 0 {return}
-
-	fileName := helpers.get_file_name(file)
-	exports.Glumity_printf(
-		"%s is an old plugin, functionality could be broken!\n",
-		strings.unsafe_string_to_cstring(file),
-	)
-
-	cppDumper.old_plugin_supply_request(requestFile)
-}
-
-dllLoader_LoadIL2CPPAPIBridge_TCC :: proc(loader: ^dllLoader) {
+dllLoader_LoadBridge_TCC :: proc(loader: ^dllLoader) {
 	tccPath := strings.concatenate({loader.pluginsPath, "/libtcc.dll"})
 
 	if !os.exists(tccPath) {
@@ -116,37 +101,6 @@ dllLoader_LoadIL2CPPAPIBridge_TCC :: proc(loader: ^dllLoader) {
 	}
 
 	loader.loadedDlls[tccPath] = mod
-}
-
-dllLoader_LoadIL2CPPDumper :: proc(loader: ^dllLoader) {
-	dumperPath := strings.concatenate({loader.pluginsPath, "/GlumityV2IL2CPPDumper.dll"})
-
-	if !os.exists(dumperPath) {
-		return
-	}
-
-	mod := windows.LoadLibraryA(strings.unsafe_string_to_cstring(dumperPath))
-	if mod == nil {
-		lastErr := windows.GetLastError()
-		exports.Glumity_printf(
-			"Could not load GlumityV2IL2CPPDumper [%s] error: %d\n",
-			strings.unsafe_string_to_cstring(dumperPath),
-			lastErr,
-		)
-		return
-	}
-
-	procAdd := windows.GetProcAddress(mod, strings.unsafe_string_to_cstring(GLUMITY_ENTRY))
-	if procAdd == nil {
-		exports.Glumity_printf(
-			"Could not find %s in the dumper plugin!\n",
-			strings.unsafe_string_to_cstring(GLUMITY_ENTRY),
-		)
-		return
-	}
-
-	cppDumper.il2cpp_dumper_find_exports()
-	loader.loadedDlls[dumperPath] = mod
 }
 
 dllLoader_loadDlls :: proc(loader: ^dllLoader) {
