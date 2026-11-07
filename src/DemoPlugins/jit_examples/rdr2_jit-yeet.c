@@ -103,7 +103,7 @@ void CreateThrowPrompt()
     HUD__UI_PROMPT_SET_CONTROL_ACTION(throwPrompt, 0x760A9C6F); // INPUT_CONTEXT_SECONDARY (G)
 
     HUD__UI_PROMPT_SET_TEXT(throwPrompt,
-        MISC_VAR_STRING(10, 2, (UINT64)(uintptr_t)"LITERAL_STRING", (UINT64)(uintptr_t)"Yeet"));
+        MISC_VAR_STRING(10, 2, (UINT64)(uintptr_t)"LITERAL_STRING", (UINT64)(uintptr_t)"Yeet Me"));
 
     HUD__UI_PROMPT_SET_PRIORITY(throwPrompt, 3);
     HUD__UI_PROMPT_SET_TRANSPORT_MODE(throwPrompt, 0);
@@ -188,7 +188,14 @@ void MyScript()
     }
 }
 
-void RdrScriptMain(HMODULE glumityInstance)
+GLUMITYV2_RDR2_PLUGIN_ENTRY
 {
-    scriptRegister(glumityInstance, MyScript);
+    scriptRegister(bridgeInstance, MyScript);
 }
+
+GLUMITYV2_RDR2_PLUGIN_EXIT
+{
+    scriptUnregister(bridgeInstance);
+	return 1;
+}
+
