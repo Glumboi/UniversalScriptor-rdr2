@@ -26,7 +26,6 @@ extern "C"
 	SHV_DEFINE(void, scriptRegisterAdditionalThread, (HMODULE, void (*)(void)));
 	SHV_DEFINE(void, scriptUnregister, (HMODULE));
 	// REMOVED: scriptUnregisterFn definition to prevent null-deref bugs
-
 	SHV_DEFINE(void, nativeInit, (UINT64));
 	SHV_DEFINE(void, nativePush64, (UINT64));
 	SHV_DEFINE(PUINT64, nativeCall, (void));

@@ -21,6 +21,7 @@
 #endif
 
 typedef void (*GlumityPlugin_rdr2_EntryPoint)(HMODULE bridgeInstance);
+typedef void (*GlumityPlugin_rdr2_ExitPoint)(HMODULE bridgeInstance);
 typedef void (*GlumityPlugin_EntryPoint)(void);
 typedef BOOL (*GlumityPlugin_ExitPoint)(void);
 typedef void (*GlumityGeneric_Func)(void);
@@ -33,10 +34,16 @@ typedef void (*GlumityDependencyErrorCallback)(const char *failedDllName);
         GLUMITY_PRINT_COLOR(CON_GREEN, "Found dependency: %s!\n", MY_PLUGIN, dllName);
 
 #define GLUMITYV2_PLUGIN_ENTRY \
-    EXPORT void GlumityMain(void)
+    EXPORT void GlumityMain()
+
+#define GLUMITYV2_RDR2_PLUGIN_ENTRY \
+    EXPORT void RdrScriptMain(HMODULE bridgeInstance)
+
+#define GLUMITYV2_RDR2_PLUGIN_EXIT \
+    EXPORT BOOL GlumityExit(HMODULE bridgeInstance) // return true/1 if finished cleaning up all hooks
 
 #define GLUMITYV2_PLUGIN_EXIT \
-    EXPORT BOOL GlumityExit(void) // return true/1 if finished cleaning up all hooks
+    EXPORT BOOL GlumityExit() // return true/1 if finished cleaning up all hooks
 
 // Recommended to use this to run most code,
 // specially function hooking since you have to rely on the dumper being loaded

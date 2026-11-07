@@ -105,10 +105,8 @@ static inline Vector3 Vector3_Cross(Vector3 a, Vector3 b)
 static inline float Vector3_Length(Vector3 v) { return sqrtf((v.x * v.x) + (v.y * v.y) + (v.z * v.z)); }
 static inline float Vector3_Magnitude(Vector3 v) { return Vector3_Length(v); }
 
-/* Get the dot product of two vectors */
 static inline float Vector3_Dot(Vector3 a, Vector3 b) { return (a.x * b.x) + (a.y * b.y) + (a.z * b.z); }
 
-/* Convert the vector to have a length of 1 */
 static inline Vector3 Vector3_Normalize(Vector3 v)
 {
 	float length = Vector3_Length(v);
@@ -118,14 +116,12 @@ static inline Vector3 Vector3_Normalize(Vector3 v)
 	return Vector3_Make(v.x * norm, v.y * norm, v.z * norm);
 }
 
-/* Linearly interpolate between two vectors by amount t */
 static inline Vector3 Vector3_Lerp(Vector3 from, Vector3 to, float t)
 {
 	t = fmaxf(fminf(t, 1.0f), 0.0f);
 	return Vector3_Make(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, from.z + (to.z - from.z) * t);
 }
 
-/* Reflects a vector off the plane defined by a normal */
 static inline Vector3 Vector3_Reflect(Vector3 v, Vector3 normal)
 {
 	float d = Vector3_Dot(v, normal);

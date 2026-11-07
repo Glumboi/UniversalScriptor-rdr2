@@ -2,7 +2,6 @@
 
 
 typedef unsigned int eInputType;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define UNDEFINED_INPUT 0x2417F471u
 #define INPUT_NEXT_CAMERA 0x7F8D09B8u
 #define INPUT_LOOK_LR 0xA987235Fu
@@ -789,7 +788,6 @@ typedef unsigned int eInputType;
 #define INPUT_SCRIPTED_FLY_ZUP 0x639B9FC9u
 #define INPUT_SCRIPTED_FLY_ZDOWN 0x9C5E030Cu
 typedef unsigned int eBrawlingStyle;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define BS_AI 0x802C604Du
 #define BS_AI_BARBRAWL 0x4FF5F0C7u
 #define BS_AI_DEFENSIVE 0xD888F2FDu
@@ -1577,7 +1575,6 @@ enum
 };
 
 typedef unsigned int eBlipModifier;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define BLIP_MODIFIER_ANIMAL_SKINNED 0xFCAD9589u
 #define BLIP_MODIFIER_AREA 0xA2814CC7u
 #define BLIP_MODIFIER_AREA_ACCURATE 0x1B0442BCu
@@ -1951,7 +1948,6 @@ typedef unsigned int eBlipModifier;
 #define BLIP_MODIFIER_WITNESS_INVESTIGATING 0x5E176D3Au
 #define BLIP_MODIFIER_WITNESS_UNIDENTIFIED 0xFAA28257u
 typedef unsigned int eBlips;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define BLIP_STYLE_LOOT_OBJECTIVE 0x3EE98B8Eu
 #define BLIP_STYLE_ENEMY 0x318C617Cu
 #define BLIP_STYLE_BOUNTY_HUNTER 0x1F242DF7u
@@ -2158,7 +2154,6 @@ enum
 };
 
 typedef unsigned int eCrimeType;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define CRIME_ACCOMPLICE 0xAF074F6Du
 #define CRIME_ARSON 0x68134DC7u
 #define CRIME_ASSAULT 0xBADC882u
@@ -2604,7 +2599,6 @@ enum
 };
 
 typedef unsigned int eMarkerType;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define MARKERTYPE_CYLINDER 0x94FDAE17u
 #define MARKERTYPE_CUBE 0x6EB7D3BBu
 #define MARKERTYPE_SPHERE 0x50638AB9u
@@ -2624,7 +2618,6 @@ typedef unsigned int eMarkerType;
 #define MARKERTYPE_NUM_9 0xE9F6303Bu
 
 typedef unsigned int PedBodyComponentTags;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define TAG_HATS 0x9925C067u
 #define TAG_HAIR 0x864B03AEu
 #define TAG_SHIRTS 0x2026C46Du
@@ -2702,7 +2695,6 @@ enum
 };
 
 typedef unsigned int eEmote;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define BOAR_EMOTE 0x9D11F0CEu
 #define BUCK_EMOTE 0x887EA4Cu
 #define KIT_EMOTE_ACTION_BECKON_1 0x7FC09D55u
@@ -2831,7 +2823,6 @@ enum
 	TARGETING_MODE_EXPERT
 };
 typedef unsigned int eWeaponHash;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define WEAPON_ALLIGATOR 0xB5C5D8F1u
 #define WEAPON_ANIMAL 0xF9FBAEBEu
 #define WEAPON_BADGER 0xD872AB0Au
@@ -3078,7 +3069,6 @@ enum
 };
 
 typedef unsigned int ePromptPressDuration;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define SHORT_TIMED_EVENT_MP 0x31CB12D4u
 #define SHORT_TIMED_EVENT 0x65943D74u
 #define MEDIUM_TIMED_EVENT 0xCF1E51DEu
@@ -3118,12 +3108,11 @@ enum
 	ECF_WILL_SHOOT_AT_TARGET_PEDS = (1 << 28),
 	ECF_INTERRUPT_ALWAYS = (1 << 29),
 	ECF_IGNORE_ENTRY_FROM_CLOSEST_POINT = (1 << 30),
-	ECF_ALLOW_JACK_PLAYER_PED_ONLY = (-2147483647 - 1) /* 1 << 31 overflows int in C */,
+	ECF_ALLOW_JACK_PLAYER_PED_ONLY = (-2147483647 - 1)
 };
 
 
 typedef unsigned int eAddItemReason;
-/* values do not fit in int: ISO C enum constants must, so these are macros */
 #define ADD_REASON_AWARDS 0xB784AD1Eu
 #define ADD_REASON_CREATE_CHARACTER 0xE2C4FF71u
 #define ADD_REASON_DEBUG 0x5C05C64Du
