@@ -9,11 +9,10 @@ import "core:strconv"
 import "core:strings"
 
 @(private)
-DEFAULT_CONFIG: string : "[config]\nloadDumperFirst=1\npluginPath=./Plugins\nuseConsole=1\nblockList=\n"
+DEFAULT_CONFIG: string : "[config]\npluginPath=./Plugins\nuseConsole=1\nblockList=\n"
 
 loaderConfig :: struct {
 	cfg:        ini.Map,
-	loadDumperFirst: bool,
 	pluginPath: string,
 	useConsole: bool,
 	blockList:  []string,
@@ -53,7 +52,6 @@ loaderConfig_init :: proc(path: string) -> loaderConfig {
 	}
 
 	exports.Glumity_printf("Config!\n")
-	returnVal.loadDumperFirst, _ = strconv.parse_bool(returnVal.cfg["config"]["loadDumperFirst"])
 	returnVal.useConsole, _ = strconv.parse_bool(returnVal.cfg["config"]["useConsole"])
 	returnVal.blockList  = strings.split(returnVal.cfg["config"]["blockList"], ",")
 	returnVal.pluginPath = returnVal.cfg["config"]["pluginPath"]
