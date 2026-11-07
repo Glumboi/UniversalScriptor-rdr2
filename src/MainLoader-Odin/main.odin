@@ -41,8 +41,6 @@ setup :: proc() {
 	if g_cfg.useConsole && helpers.init_console() {
 		exports.Glumity_printf("Initialized console...\n")
 		windows.CreateThread(nil, 0, console_watchdog, nil, 0, nil)
-	} else {
-		c.freopen("NUL", "w", c.stdout)
 	}
 
 	g_pluginLoader = dllLoader.dllLoader_create()
