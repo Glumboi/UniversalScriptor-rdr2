@@ -11,7 +11,7 @@
 #define GLUMITYLIB_PRINT_HEADER "GlumityV2Lib"
 
 #define GLUMITYV2_MODULE "GlumityToolSuite2"
-#define GLUMITYV2_DLL "GlumityToolSuite2.dll"
+#define GLUMITYV2_DLL "GlumityToolSuite2.asi"
 
 #ifdef __cplusplus
 #define EXPORT extern "C" __declspec(dllexport)
