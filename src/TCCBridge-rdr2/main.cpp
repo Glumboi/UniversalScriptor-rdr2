@@ -6,6 +6,7 @@
 #include <vector>
 #include <set>
 #include <filesystem>
+#include <fstream>
 #include <memoryapi.h>
 #include <atomic>
 
@@ -144,6 +145,16 @@ static const ShvExport kShvExports[] = {
     SHV_EXPORT(getGameVersion),
 };
 
+std::string FileAsString(const std::string &filepath)
+{
+    std::ifstream file(filepath);
+    if (!file.is_open())
+        return "";
+
+    return std::string((std::istreambuf_iterator<char>(file)),
+                       std::istreambuf_iterator<char>());
+}
+
 void LoadAndRunSingleScript(const std::filesystem::path &scriptPath, const char *libDir, const char *includeDir)
 {
     GLUMITY_PRINT_COLOR(CON_BLUE, "=== [DEBUG] Starting JIT Compilation for %s ===\n", TCC_HEADER, scriptPath.filename().string().c_str());
@@ -176,14 +187,57 @@ void LoadAndRunSingleScript(const std::filesystem::path &scriptPath, const char 
         tcc_add_symbol(tccState, apiFunc.first.c_str(), (const void *)apiFunc.second);
     }
 
-    for (auto &lib : G_HARD_LIBS)
+    // Draft idea: add a custom keyword like ADD_LIB kernel32 at the top of plugins to specify to expand functionality?
+    std::ifstream file(scriptPath);
+    std::string line;
+    std::vector<std::string> plugin_libs;
+
+    if (file.is_open())
     {
-        GLUMITY_PRINT_COLOR(CON_MAGENTA, "[DEBUG] Adding library to context: %s\n", TCC_HEADER, lib.c_str());
+        while (getline(file, line))
+        {
+            const std::string prefix = "ADD_LIB(";
+
+            size_t start_pos = line.find(prefix);
+            if (start_pos != std::string::npos)
+            {
+                size_t content_start = start_pos + prefix.length();
+                size_t end_pos = line.find(')', content_start);
+
+                if (end_pos != std::string::npos)
+                {
+                    std::string lib_name = line.substr(content_start, end_pos - content_start);
+
+                    if (lib_name.size() >= 2 && lib_name.front() == '"' && lib_name.back() == '"')
+                    {
+                        lib_name = lib_name.substr(1, lib_name.length() - 2);
+                    }
+
+                    size_t first = lib_name.find_first_not_of(" \t");
+                    if (first != std::string::npos)
+                    {
+                        size_t last = lib_name.find_last_not_of(" \t");
+                        lib_name = lib_name.substr(first, (last - first + 1));
+                    }
+
+                    if (!lib_name.empty())
+                    {
+                        plugin_libs.push_back(lib_name);
+                    }
+                }
+            }
+        }
+        file.close();
+    }
+
+    for (auto &lib : plugin_libs)
+    {
+        GLUMITY_PRINT_COLOR(CON_MAGENTA, "[DEBUG] Adding plugin-requested library to context: %s\n", TCC_HEADER, lib.c_str());
         tcc_add_library(tccState, lib.c_str());
     }
 
     GLUMITY_PRINT_COLOR(CON_YELLOW, "[DEBUG] Invoking tcc_add_file for source path...\n", TCC_HEADER);
-    if (tcc_add_file(tccState, scriptPath.string().c_str()) < 0)
+    if (tcc_add_file(tccState, scriptPath.string().c_str()) < 0) 
     {
         GLUMITY_PRINT_COLOR(CON_RED, "[DEBUG] Error: tcc_add_file failed during parsing pass.\n", TCC_HEADER);
         tcc_delete(tccState);
@@ -434,6 +488,10 @@ static LONG CALLBACK BridgeVEH(PEXCEPTION_POINTERS ep)
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
+void OnHookInitFail()
+{
+}
+
 VOID Setup()
 {
     if (!g_vehHandle)
@@ -455,7 +513,6 @@ VOID Setup()
     }
 
     GLUMITY_PRINT_COLOR(CON_GREEN, "ScriptHookRDR2.dll successfully bound!\n", TCC_HEADER);
-
     HMODULE hCurrentDll = GetModuleHandleA("TCCBridge-rdr2.dll");
     char pathBuffer[MAX_PATH] = {0};
     GetPluginDirectory(hCurrentDll, pathBuffer, sizeof(pathBuffer));

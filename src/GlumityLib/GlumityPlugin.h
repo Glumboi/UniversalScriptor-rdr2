@@ -33,6 +33,8 @@ typedef void (*GlumityDependencyErrorCallback)(const char *failedDllName);
     else                                                                                                              \
         GLUMITY_PRINT_COLOR(CON_GREEN, "Found dependency: %s!\n", MY_PLUGIN, dllName);
 
+#define ADD_LIB(x) // used by tcc to interpret the libs to link against
+
 #define GLUMITYV2_PLUGIN_ENTRY \
     EXPORT void GlumityMain()
 
