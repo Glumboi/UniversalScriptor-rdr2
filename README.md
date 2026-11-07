@@ -50,7 +50,8 @@ void RdrScriptMain(HMODULE glumityInstance)
 }
 ```
 
-## Built binaries can be found on [the nexusmods page]([https://example.com](https://www.nexusmods.com/reddeadredemption2/mods/11513?tab=description))
+## Built binaries can be found on 
+[the nexusmods page]([https://example.com](https://www.nexusmods.com/reddeadredemption2/mods/11513?tab=description))
 
 ## Build requirements
 
