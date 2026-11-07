@@ -16,7 +16,7 @@ ADD_LIB(user32)
 #include <Scipthookrdr2/main.h>
 #include <Scipthookrdr2/natives.h>
 
-#define MY_PLUGIN "rdr2_jit-godmode"
+#define MY_PLUGIN "rdr2_jit-extLibExample"
 
 void MyScript()
 {
